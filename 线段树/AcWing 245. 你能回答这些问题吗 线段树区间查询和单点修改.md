@@ -1,6 +1,6 @@
-https://www.acwing.com/problem/content/246/
+#### [题目链接](https://www.acwing.com/problem/content/246/)
 
-/*
+
 给定长度为 $N$ 的数列 $A$，以及 $M$ 条指令，每条指令可能是以下两种之一：
 
 1.  `1 x y`，查询区间 $\[x,y\]$ 中的最大连续子段和，即 $\\max\\limits\_{x \\le l \\le r \\le y}${$\\sum\\limits^r\_{i=l} A\[i\]$}。
@@ -40,8 +40,8 @@ $\-1000 \\le A\[i\] \\le 1000$
 
     2
     -1
-*/
 
+```cpp
 
 #include <iostream>
 #include <cstring>
@@ -152,3 +152,5 @@ int main()
     
     return 0;
 }
+
+```
