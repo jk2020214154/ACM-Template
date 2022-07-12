@@ -1,6 +1,6 @@
-https://www.acwing.com/problem/content/1277/
+#### [题目链接](https://www.acwing.com/problem/content/1277/)
 
-/*
+
 给定一个正整数数列 $a\_1,a\_2,…,a\_n$，每一个数都在 $0 \\sim p-1$ 之间。
 
 可以对这列数进行两种操作：
@@ -66,114 +66,114 @@ $0 \\le t < p$
 最后的序列是 $97,14,60,96$。
 
 
-*/
+```cpp
+    #include <iostream>
+    #include <cstring>
+    #include <algorithm>
+
+    #define MAXN 200010
 
 
-#include <iostream>
-#include <cstring>
-#include <algorithm>
+    using namespace std;
 
-#define MAXN 200010
-
-
-using namespace std;
-
-typedef long long ll;
-int m;
-ll p;
+    typedef long long ll;
+    int m;
+    ll p;
 
 
-struct Tree{
+    struct Tree{
     int l;
     int r;
     ll dat;
-}tree[4*MAXN];
+    }tree[4*MAXN];
 
-void pushup(int root)
-{
+    void pushup(int root)
+    {
     tree[root].dat=max(tree[2*root].dat,tree[2*root+1].dat);
     // tree[root].dat=max(tree[root << 1].dat,tree[root << 1 | 1].dat);
-}
+    }
 
 
-void build(int root,int l,int r)
-{
+    void build(int root,int l,int r)
+    {
     tree[root].l=l,tree[root].r=r;
     if(l==r)//叶子结点
-        return ;
+    return ;
     int mid=(l+r)/2;
     // int mid= l + r >> 1;//由于+的优先级大于>>,故会先算l+r,再右移
     build(2*root,l,mid);
     // build(root << 1,l,mid);
     build(2*root+1,mid+1,r);
     // build(root << 1 | 1,mid+1,r);
-}
+    }
 
 
-void modify(int root,int pos,ll val)//单点修改
-{
+    void modify(int root,int pos,ll val)//单点修改
+    {
     if(tree[root].l==pos&&tree[root].r==pos)
-        tree[root].dat=val;
+    tree[root].dat=val;
     else
     {
-        int mid=(tree[root].l+tree[root].r)/2;
-        // int mid=tree[root].l+tree[root].r >> 1;
-        if(pos<=mid)
-            modify(2*root,pos,val);
-            // modify(root << 1,pos,val);
-        else 
-            modify(2*root+1,pos,val);
-            // modify(root << 1 | 1,pos,val);
-    
-        pushup(root);
-    }
-}
-
-
-ll query(int root,int l,int r)
-{
-    if(l<=tree[root].l&&r>=tree[root].r)
-        return tree[root].dat;
-    
     int mid=(tree[root].l+tree[root].r)/2;
     // int mid=tree[root].l+tree[root].r >> 1;
-    
+    if(pos<=mid)
+        modify(2*root,pos,val);
+        // modify(root << 1,pos,val);
+    else 
+        modify(2*root+1,pos,val);
+        // modify(root << 1 | 1,pos,val);
+
+    pushup(root);
+    }
+    }
+
+
+    ll query(int root,int l,int r)
+    {
+    if(l<=tree[root].l&&r>=tree[root].r)
+    return tree[root].dat;
+
+    int mid=(tree[root].l+tree[root].r)/2;
+    // int mid=tree[root].l+tree[root].r >> 1;
+
     ll res=0;
     if(l<=mid)
-        res=max(res,query(2*root,l,r));
-        // res=max(res,query(root << 1,l,r));
+    res=max(res,query(2*root,l,r));
+    // res=max(res,query(root << 1,l,r));
     if(r>mid)
-        res=max(res,query(2*root+1,l,r));
-        // res=max(res,query(root << 1 | 1,l,r));
+    res=max(res,query(2*root+1,l,r));
+    // res=max(res,query(root << 1 | 1,l,r));
     return res;
-    
-}
+
+    }
 
 
 
 
-int main()
-{
+    int main()
+    {
     ll cnt=0,last=0;
     scanf("%d %lld\n",&m,&p);
     build(1,1,m);
     for(int i=1;i<=m;i++)
     {
-        ll num;
-        char op;
-        scanf("%c %lld ",&op,&num);
-        if(op=='Q')
-        {
-            last=query(1,cnt-num+1,cnt);
-            printf("%lld\n",last);
-        }
-        else if(op=='A')
-        {
-            modify(1,cnt+1,(num+last)%p);
-            cnt++;
-        }
-        
-        
+    ll num;
+    char op;
+    scanf("%c %lld ",&op,&num);
+    if(op=='Q')
+    {
+        last=query(1,cnt-num+1,cnt);
+        printf("%lld\n",last);
+    }
+    else if(op=='A')
+    {
+        modify(1,cnt+1,(num+last)%p);
+        cnt++;
+    }
+
+
     }
     return 0;
-}
+    }
+
+```
