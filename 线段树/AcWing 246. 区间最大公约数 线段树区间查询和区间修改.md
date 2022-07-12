@@ -1,6 +1,6 @@
-https://www.acwing.com/problem/content/247/
+#### [题目链接](https://www.acwing.com/problem/content/247/)
 
-/*
+
 给定一个长度为 $N$ 的数列 $A$，以及 $M$ 条指令，每条指令可能是以下两种之一：
 
 1.  `C l r d`，表示把 $A\[l\],A\[l+1\],…,A\[r\]$ 都加上 $d$。
@@ -44,9 +44,9 @@ $|d| \\le 10^{18}$
     1
     2
     4
-*/
 
 
+```cpp
 
 #include <iostream>
 #include <cstring>
@@ -176,3 +176,4 @@ int main()
     }
     return 0;
 }
+```
