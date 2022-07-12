@@ -1,4 +1,4 @@
-https://www.acwing.com/problem/content/832/
+#### [题目链接](https://www.acwing.com/problem/content/832/)
 
 /*
 给定一个长度为 $N$ 的整数数列，输出每个数左边第一个比它小的数，如果不存在则输出 $\-1$。
@@ -30,6 +30,7 @@ $1 \\le 数列中元素 \\le 10^9$
 
 */
 
+```cpp
 #include <iostream>
 #include <cstring>
 #include <stack>
@@ -60,3 +61,4 @@ int main()
         printf("%d ",res[i]);
     return 0;
 }
+```
