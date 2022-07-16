@@ -195,3 +195,165 @@ int main()
 }
 
 ```
+
+#### 修改版
+
+```cpp
+// Problem: 普通平衡树
+// Contest: AcWing
+// URL: https://www.acwing.com/problem/content/description/255/
+// Memory Limit: 64 MB
+// Time Limit: 1000 ms
+// Date: 2022-07-15 19:32:11
+// 
+// Powered by CP Editor (https://cpeditor.org)
+
+/**
+  * @author  : SDTBU_LY
+  * @version : V1.0.0
+  * @上联    : ac自动机fail树上dfs序建可持久化线段树
+  * @下联    : 后缀自动机的next指针DAG图上求SG函数
+**/
+
+
+#include <iostream>
+#include <algorithm>
+#include <cstring>
+
+#define MAXN 100010
+
+using namespace std;
+
+typedef long long ll;
+
+int n,tot=0;
+int op[MAXN],id[MAXN];
+ll a[MAXN],b[MAXN];
+
+
+struct Tree{
+    int l;
+    int r;
+    int dat;
+}tree[4*MAXN];
+
+
+void pushup(int root)
+{
+    tree[root].dat=tree[2*root].dat+tree[2*root+1].dat;
+}
+
+void build(int root,int l,int r)
+{
+    tree[root].l=l,tree[root].r=r;
+    if(l==r)
+    {
+        tree[root].dat=0;
+        return ;
+    }
+    int mid=(l+r)/2;
+    build(2*root,l,mid);
+    build(2*root+1,mid+1,r);
+    pushup(root);
+}
+
+void modify(int root,int pos,int val)
+{
+    if(tree[root].l==pos&&tree[root].r==pos)
+    {
+        tree[root].dat+=val;
+        return ;
+    }
+    int mid=(tree[root].l+tree[root].r)/2;
+    if(pos<=mid)
+        modify(2*root,pos,val);
+    else modify(2*root+1,pos,val);
+    pushup(root);
+    
+}
+
+int query(int root,int l,int r)
+{
+    if(l<=tree[root].l&&r>=tree[root].r)
+        return tree[root].dat;
+    int mid=(tree[root].l+tree[root].r)/2;
+    int res=0;
+    if(l<=mid)
+        res+=query(2*root,l,r);
+    if(r>mid)
+        res+=query(2*root+1,l,r);
+    return res;
+}
+
+
+int k_th(int root,int pos)
+{
+    if(tree[root].l==tree[root].r)
+        return tree[root].l;
+    //int mid=(tree[root].l+tree[root].r)/2;
+    if(pos<=tree[2*root].dat)
+        return k_th(2*root,pos);
+    else return k_th(2*root+1,pos-tree[2*root].dat);
+    
+    
+}
+
+int query_rank(int pos)
+{
+    return query(1,1,pos-1)+1;
+}
+
+int query_pre(int pos)
+{
+    return k_th(1,query(1,1,pos-1));
+}
+
+int query_nex(int pos)
+{
+    return k_th(1,query(1,1,pos)+1);
+}
+
+int main()
+{
+    scanf("%d",&n);
+    for(int i=1;i<=n;i++)
+    {
+        scanf("%d %lld",&op[i],&a[i]);
+        if(op[i]!=4)
+            b[++tot]=a[i];
+    }
+    
+    sort(b+1,b+tot+1);
+    tot=unique(b+1,b+tot+1)-(b+1);
+    
+    //cout << tot << endl;
+    
+    build(1,1,tot);
+    
+    for(int i=1;i<=n;i++)
+    {
+        if(op[i]!=4)
+            id[i]=lower_bound(b+1,b+tot+1,a[i])-b;
+    }
+    
+    for(int i=1;i<=n;i++)
+    {
+        //cout << id[i]  << "***" << endl;
+        if(op[i]==1)
+            modify(1,id[i],1);
+        else if(op[i]==2)
+            modify(1,id[i],-1);
+        else if(op[i]==3)
+            printf("%d\n",query_rank(id[i]));
+        else if(op[i]==4)
+            printf("%lld\n",b[k_th(1,a[i])]);
+        else if(op[i]==5)
+            printf("%lld\n",b[query_pre(id[i])]);
+        else if(op[i]==6)
+            printf("%lld\n",b[query_nex(id[i])]);
+    }
+    
+    return 0;
+}
+
+```
