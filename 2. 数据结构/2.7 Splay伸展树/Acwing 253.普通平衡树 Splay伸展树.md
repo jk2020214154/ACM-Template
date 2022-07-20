@@ -202,16 +202,9 @@ int kth(int x)//查询排名为x的数
             if(x<=tree[y].siz)//在左儿子上找
                 p=y;
             else return tree[p].val;//否则就在当前结点上
-                
         }
-        
     }
-    
-    
 }
-
-
-
 
 
 int main()
@@ -223,21 +216,21 @@ int main()
     {
         int op,num;
         scanf("%d %d",&op,&num);
-        if(op==1)
+        if(op==1)//插入数值num
             Insert(num);
-        else if(op==2)
+        else if(op==2)//删除数值num
             Remove(num);
-        else if(op==3)
+        else if(op==3)//查询数值num的排名
         {
             Find(num);
             printf("%d\n",tree[tree[root].son[0]].siz);
             //有哨兵,故结果不需要再+1
         }
-        else if(op==4)
+        else if(op==4)//查询排名为num的数值
             printf("%d\n",kth(num+1));
-        else if(op==5)
+        else if(op==5)//求数值num的前驱
             printf("%d\n",tree[Pre_Next(num,0)].val);
-        else if(op==6)
+        else if(op==6)//求数值num的后继
             printf("%d\n",tree[Pre_Next(num,1)].val);        
         
     }
