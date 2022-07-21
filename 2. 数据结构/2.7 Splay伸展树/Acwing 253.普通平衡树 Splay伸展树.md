@@ -47,7 +47,7 @@ $1 \\le n \\le 100000$,所有数均在 $\-10^7$ 到 $10^7$ 内。
     
     
  ```cpp
- #include <iostream>
+#include <iostream>
 #include <cstring>
 #include <algorithm>
 
@@ -67,7 +67,7 @@ struct Tree{
     int val;//val表示该点的权值
 }tree[MAXN];
 
-int root,tot;
+int root,tot;//分别表示根结点和总结点数
 
 void pushup(int x)//上传操作
 {
@@ -184,25 +184,21 @@ void Remove(int x)//删除x
 }
 
 
-int kth(int x)//查询排名为x的数
+int kth(int x)//查询排名为x的位置
 {
     int p=root;
     if(tree[p].siz<x)//当前树上无这么多数
-        return 0;//不存在
+        return -1;//不存在
     while(1)
     {
-        int y=tree[p].son[0];//左儿子
-        if(x>tree[y].siz+tree[p].cnt)//如果排名比左儿子的大小与当前结点的数量要大,去右儿子找
+        if(x<=tree[tree[p].son[0]].siz)//左儿子
+            p=tree[p].son[0];
+        else if(x>tree[tree[p].son[0]].siz+tree[p].cnt)//右儿子
         {
-            x-=tree[y].siz+tree[p].cnt;
+            x-=tree[tree[p].son[0]].siz+tree[p].cnt;
             p=tree[p].son[1];
         }
-        else //否则的话在当前结点或者左儿子查找
-        {
-            if(x<=tree[y].siz)//在左儿子上找
-                p=y;
-            else return tree[p].val;//否则就在当前结点上
-        }
+        else return p;//当前结点
     }
 }
 
@@ -227,7 +223,7 @@ int main()
             //有哨兵,故结果不需要再+1
         }
         else if(op==4)//查询排名为num的数值
-            printf("%d\n",kth(num+1));
+            printf("%d\n",tree[kth(num+1)].val);
         else if(op==5)//求数值num的前驱
             printf("%d\n",tree[Pre_Next(num,0)].val);
         else if(op==6)//求数值num的后继
@@ -239,5 +235,4 @@ int main()
     
     return 0;
 }
-
 ```
