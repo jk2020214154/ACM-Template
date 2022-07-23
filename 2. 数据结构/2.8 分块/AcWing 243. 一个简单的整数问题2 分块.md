@@ -73,57 +73,47 @@ ll sum[MAXN];
 int st[MAXN],ed[MAXN],pos[MAXN];
 
 
-void modify(int l,int r,int num)
-{
-    int lpos=pos[l],rpos=pos[r];
-    if(lpos==rpos)
-    {
-        for(int i=l;i<=r;i++)
+void modify(int l,int r,int num){
+    int lpos=pos[l],rpos=pos[r];//lpos对应l的块,rpos对应r的块
+    if(lpos==rpos){//情况1:处理碎片块,l,r的块相同,暴力处理
+        for(int i=l;i<=r;i++)//更新区间[l,r]的w[i]
             w[i]+=num;
-        sum[lpos]+=num*(r-l+1);
+        sum[lpos]+=num*(r-l+1);//更新块的sum
     }
-    else
-    {
-        for(int i=l;i<=ed[lpos];i++)
+    else{
+        for(int i=l;i<=ed[lpos];i++)//情况1:处理碎片块,l所属的块暴力处理,更新[l,ed[lpos]]块的w[i]
             w[i]+=num;
-        sum[lpos]+=num*(ed[lpos]-l+1);
-        
-        for(int i=lpos+1;i<=rpos-1;i++)
+        sum[lpos]+=num*(ed[lpos]-l+1);//更新l所属块的sum
+        for(int i=lpos+1;i<=rpos-1;i++)//情况2:处理整块,更新[lpos+1,rpos-1]整块的add
             add[i]+=num;
-        
-        for(int i=st[rpos];i<=r;i++)
+        for(int i=st[rpos];i<=r;i++)//情况1:处理碎片块,r所属的块暴力处理,更新[st[rpos],r]块的w[i]
             w[i]+=num;
-
-        sum[rpos]+=num*(r-st[rpos]+1);
+        sum[rpos]+=num*(r-st[rpos]+1);//更新r所属块的sum
     }
-    
 }
 
-ll query(int l,int r)
-{
-    int lpos=pos[l],rpos=pos[r];
+
+ll query(int l,int r){
+    int lpos=pos[l],rpos=pos[r];//lpos对应l的块,rpos对应r的块
     ll res=0;
-    if(lpos==rpos)
-    {
-        for(int i=l;i<=r;i++)
+    if(lpos==rpos){//情况1:处理碎片块,l,r的块相同,暴力处理
+        for(int i=l;i<=r;i++)//区间[l,r]求和
             res+=w[i];
-        res+=add[lpos]*(r-l+1);
+        res+=add[lpos]*(r-l+1);//加上懒标记
     }
-    else
-    {
-        for(int i=l;i<=ed[lpos];i++)
+    else{
+        for(int i=l;i<=ed[lpos];i++)//情况1:处理碎片块,l所属的块暴力处理,区间[l,ed[lpos]]求和
             res+=w[i];
-        res+=add[lpos]*(ed[lpos]-l+1);
+        res+=add[lpos]*(ed[lpos]-l+1);//加上懒标记
         
-        for(int i=lpos+1;i<=rpos-1;i++)
+        for(int i=lpos+1;i<=rpos-1;i++)//情况2:处理整块
             res+=sum[i]+add[i]*(ed[i]-st[i]+1);
         
-        for(int i=st[rpos];i<=r;i++)
+        for(int i=st[rpos];i<=r;i++)//情况1:处理碎片块,r所属的块暴力处理,区间[st[rpos],r]求和
             res+=w[i];
-
-        res+=add[rpos]*(r-st[rpos]+1);        
+        res+=add[rpos]*(r-st[rpos]+1);//加上懒标记  
     }
-    return res;
+    return res;//返回结果
 }
 
 
@@ -133,7 +123,6 @@ int main()
     scanf("%d %d",&n,&m);
     
     int block=sqrt(n);//块的大小,每块有block个元素
-    
     int t=n/block;//块的数量,共分为t块
     if(n%block!=0)//sqrt(n)的结果不是整数,最后加上一小块
         t++;
@@ -144,19 +133,19 @@ int main()
         ed[i]=i*block;
     }
     ed[t]=n;//sqrt(n)的结果不是整数,将右端点更新为n
-    
     for(int i=1;i<=n;i++)//遍历所有元素的位置
         pos[i]=(i-1)/block+1;
     
     for(int i=1;i<=n;i++)
     {
         scanf("%d",&w[i]);
-        //sum[pos[i]]+=w[i];
+        sum[pos[i]]+=w[i];
     }    
+    /*
     for(int i=1;i<=t;i++)//遍历所有的块
         for(int j=st[i];j<=ed[i];j++)//遍历块内所有元素
             sum[i]+=w[j];
-    
+    */
     
     for(int i=1;i<=m;i++)
     {
@@ -177,6 +166,5 @@ int main()
     
     return 0;
 }
-
 ```
 
