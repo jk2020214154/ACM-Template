@@ -117,7 +117,7 @@ void modify(int l,int r,int num){
 ll query(int l,int r,int num)
 {
     int lpos=pos[l],rpos=pos[r];//lpos对应l的块,rpos对应r的块
-    int res=0;
+    ll res=0;
     if(lpos==rpos){//情况1:处理碎片块,l,r的块相同,暴力处理
         for(int i=l;i<=r;i++)//区间[l,r]求和
             res=(res+a[i]+add[lpos])%num;
