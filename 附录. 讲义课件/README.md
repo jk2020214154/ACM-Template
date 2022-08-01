@@ -13,7 +13,7 @@
 | 大一下 |   |   |   |   |   |   |
 |**实验室第6讲**|**深度优先搜索(dfs)**|**广度优先搜索**| \ | \ |[点我](https://acm.sdtbu.edu.cn/vjudge/contest/view.action?cid=2468)|$2022/3/8$|
 |**实验室第7讲**|**树的基础**|**并查集**| \ | \ |[点我](https://acm.sdtbu.edu.cn/vjudge/contest/view.action?cid=2470)|$2022/3/22$|
-|**实验室第8讲**|**图的基础**|**最小生成树(prim)**|**最小生成树(Kruskal)**| / |[点我](https://acm.sdtbu.edu.cn/vjudge/contest/view.action?cid=2473)|$2022/4/5$|
+|**实验室第8讲**|**图的基础**|**最小生成树(prim)**|**最小生成树(Kruskal)**| \ |[点我](https://acm.sdtbu.edu.cn/vjudge/contest/view.action?cid=2473)|$2022/4/5$|
 |**实验室第9讲**|**最短路(上)**|**Dijkstra算法**|**spfa算法**| \ |[点我](https://acm.sdtbu.edu.cn/vjudge/contest/view.action?cid=2477)|$2022/4/19$|
 |**实验室第10讲**|**最短路(下)**|**spfa判负环**|**Floyd算法**|**拓扑排序**|[点我](https://acm.sdtbu.edu.cn/vjudge/contest/view.action?cid=2480)|$2022/4/26$|
 |**实验室第11讲**|**动态规划入门**| \ | \ | \ |[点我](https://acm.sdtbu.edu.cn/vjudge/contest/view.action?cid=2481)|$2022/5/3$|
