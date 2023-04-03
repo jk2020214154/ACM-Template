@@ -49,9 +49,8 @@ $|A\[i\]| \\le 10^9$
     
     
     
-    ```cpp
-    
-    #include <iostream>
+```cpp
+#include <iostream>
 #include <cstring>
 #include <algorithm>
 
